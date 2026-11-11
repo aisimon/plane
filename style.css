@@ -1,0 +1,67 @@
+:root {
+  --bg1: #f6f9ff; --bg2: #c9d8ee;
+  --panel: #ffffff; --ink: #1b2433; --muted: #5d6b82; --line: #dde5f1;
+  --accent: #ff6b4a; --accent-ink: #fff; --accent-soft: #fff0ec;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg1: #1b2740; --bg2: #0c1424;
+    --panel: #151e30; --ink: #e8eefb; --muted: #9aabc7; --line: #26324a;
+    --accent-soft: #2a1d22;
+  }
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--ink); background: var(--bg2); }
+
+#app { display: grid; grid-template-columns: 360px 1fr; height: 100%; }
+#panel { background: var(--panel); border-right: 1px solid var(--line); overflow-y: auto; padding: 20px 18px 28px; }
+#panel h1 { font-size: 21px; margin: 0 0 4px; letter-spacing: -0.01em; }
+#panel .sub { color: var(--muted); margin: 0 0 16px; font-size: 13.5px; }
+
+#steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+#steps li { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--panel); }
+#steps li.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+#steps .head { display: flex; gap: 12px; align-items: center; width: 100%; padding: 10px 12px; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+#steps .num { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 13px; background: var(--line); color: var(--muted); }
+#steps li.active .num { background: var(--accent); color: var(--accent-ink); }
+#steps li.done .num { background: #2fa36b; color: #fff; }
+#steps .t { font-weight: 650; display: block; }
+#steps .b { font-size: 12.5px; color: var(--muted); display: block; }
+#steps .body { display: none; padding: 0 14px 12px 52px; font-size: 13.5px; }
+#steps li.active .body { display: block; }
+#steps .body ul { margin: 0; padding-left: 16px; }
+#steps .body li { border: 0; box-shadow: none; padding: 2px 0; }
+
+#tips { margin-top: 18px; padding: 12px 14px; border-radius: 12px; background: var(--accent-soft); }
+#tips h2 { margin: 0 0 6px; font-size: 14px; }
+#tips ul { margin: 0; padding-left: 18px; font-size: 13px; }
+#tips li { margin: 3px 0; }
+
+#stage { position: relative; min-width: 0; background: radial-gradient(ellipse at 50% 35%, var(--bg1), var(--bg2)); }
+#c { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+#caption { position: absolute; left: 50%; bottom: 112px; transform: translateX(-50%); max-width: min(560px, 92%); text-align: center;
+  padding: 9px 16px; border-radius: 999px; background: color-mix(in srgb, var(--panel) 88%, transparent); border: 1px solid var(--line);
+  box-shadow: 0 6px 24px rgba(20, 40, 80, .15); font-weight: 600; backdrop-filter: blur(6px); }
+#caption small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; }
+
+#hud { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 10px 12px; border-radius: 14px;
+  background: color-mix(in srgb, var(--panel) 90%, transparent); border: 1px solid var(--line); backdrop-filter: blur(6px); }
+#hud .row { display: flex; align-items: center; gap: 8px; }
+#hud .opts { margin-top: 8px; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+#hud .opts label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+#hud .hint { margin-left: auto; }
+button { font: inherit; cursor: pointer; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 10px; padding: 7px 12px; }
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 650; min-width: 92px; }
+select { font: inherit; color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 2px 4px; }
+input[type=range] { flex: 1; accent-color: var(--accent); min-width: 80px; }
+
+@media (max-width: 900px) {
+  #app { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) 36vh; }
+  #stage { order: 1; }
+  #panel { order: 2; border-right: 0; border-top: 1px solid var(--line); padding: 12px; }
+  #caption { bottom: 128px; font-size: 13px; }
+  #hud .hint { display: none; }
+}

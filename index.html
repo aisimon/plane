@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper Plane Lab — fold a classic dart in 3D</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <aside id="panel">
+      <header>
+        <h1>Paper Plane Lab</h1>
+        <p class="sub">Fold a classic high-performance dart — one sheet of A4 or Letter paper, a flat desk.</p>
+      </header>
+      <ol id="steps"></ol>
+      <section id="tips">
+        <h2>Pro tips for maximum distance</h2>
+        <ul id="tiplist"></ul>
+      </section>
+    </aside>
+
+    <main id="stage">
+      <canvas id="c"></canvas>
+      <div id="caption" aria-live="polite"></div>
+      <div id="hud">
+        <div class="row">
+          <button id="restart" title="Restart (R)" aria-label="Restart">⟲</button>
+          <button id="prev" title="Previous step (←)" aria-label="Previous step">⏮</button>
+          <button id="play" class="primary" title="Play / pause (Space)">▶ Play</button>
+          <button id="next" title="Next step (→)" aria-label="Next step">⏭</button>
+          <input id="scrub" type="range" min="0" max="1" step="0.001" value="0" aria-label="Timeline">
+        </div>
+        <div class="row opts">
+          <label>Speed
+            <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+          </label>
+          <label><input type="checkbox" id="chk-advance" checked> Auto-advance</label>
+          <label><input type="checkbox" id="chk-creases" checked> Crease lines</label>
+          <label><input type="checkbox" id="chk-camera" checked> Auto camera</label>
+          <span class="hint">Drag to orbit · scroll to zoom</span>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

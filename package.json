@@ -1,0 +1,11 @@
+{
+  "name": "plane",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "3D demo: how to fold a classic paper dart airplane",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "test": "node test/fold.test.mjs"
+  }
+}
