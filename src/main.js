@@ -205,15 +205,28 @@ function setPlaying(on) {
   playing = on;
   ui.play.textContent = on ? '⏸ Pause' : P >= N - 1e-6 ? '⟲ Replay' : '▶ Play';
 }
+// Bring the camera back to the paper. After the flight the camera is far
+// away chasing the plane, so jumping back must re-enable the guided view.
+function resetView() {
+  ui.camera.checked = true;
+  shownOp = -1; // forces the next render to rebuild and pick the op's camera preset
+  if (camera.position.length() > 90 || controls.target.length() > 30) {
+    const { op } = locate(P);
+    setCamGoal(op.def.cam);
+    camera.position.copy(camGoal.pos);
+    controls.target.copy(camGoal.target);
+  }
+}
 function goStep(i, play) {
   P = Math.min(N, Math.max(0, i));
+  resetView();
   hold = 0;
   stopAt = ui.advance.checked ? null : Math.floor(P) + 1;
   setPlaying(!!play);
 }
 document.getElementById('play').addEventListener('click', () => {
   if (!playing) {
-    if (P >= N - 1e-6) P = 0;
+    if (P >= N - 1e-6) { P = 0; resetView(); }
     const atStart = Math.abs(P - Math.round(P)) < 1e-3;
     stopAt = ui.advance.checked ? null : atStart ? Math.round(P) + 1 : Math.ceil(P);
   }
@@ -222,7 +235,11 @@ document.getElementById('play').addEventListener('click', () => {
 document.getElementById('next').addEventListener('click', () => goStep(Math.min(N, Math.floor(P + 1e-3) + 1), false));
 document.getElementById('prev').addEventListener('click', () => goStep(Math.abs(P - Math.round(P)) < 1e-3 ? Math.max(0, Math.round(P) - 1) : Math.floor(P), false));
 document.getElementById('restart').addEventListener('click', () => goStep(0, true));
-ui.scrub.addEventListener('input', () => { P = parseFloat(ui.scrub.value); setPlaying(false); });
+ui.scrub.addEventListener('input', () => {
+  P = parseFloat(ui.scrub.value);
+  if (locate(P).op.kind !== 'fly' && controls.target.length() > 30) resetView();
+  setPlaying(false);
+});
 ui.camera.addEventListener('change', () => { shownOp = -1; });
 controls.addEventListener('start', () => { ui.camera.checked = false; camGoal = null; });
 window.addEventListener('keydown', (e) => {
