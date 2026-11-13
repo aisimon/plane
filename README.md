@@ -1,4 +1,6 @@
-# plane — fold a paper airplane in 3D
+# plane
+
+Teach you how to fold paper aeroplane.
 
 An interactive 3D walkthrough for folding a classic high-performance dart from one sheet of A4 / Letter paper.
 Every fold is real geometry: the sheet is split along each crease and the flaps are rotated about it, so you can
